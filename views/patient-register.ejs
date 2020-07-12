@@ -1,0 +1,16 @@
+<body style="background-image: url(https://images.unsplash.com/photo-1585559604959-6388fe69c92a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80);">
+    <% if (locals.user) {%>
+        <div class="topnav">
+            <a href="/doctors/profile">Home</a>
+            <a href="/patients/register">Register Patient</a>
+            <a href="/reports/filter">Filter Reports</a>
+            <a href="/doctors/destroy">Logout</a>
+          </div>
+    <%}%>
+    <h1 id="heading">Register Patient Here</h1>
+    <form action="/patients/create" method="POST" class="form">
+        <input type="tel" class="input-field" name="phoneNumber" id="phoneNumber" placeholder="Enter phone number" required><br>
+        <input type="text" class="input-field" name="name" id="name" placeholder="Enter the name" required><br>
+        <button type="submit" class="form-button form-button1">Get</button>
+    </form> 
+</body>

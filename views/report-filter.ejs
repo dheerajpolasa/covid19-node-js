@@ -1,0 +1,38 @@
+<body>
+    <% if (locals.user) {%>
+        <div class="topnav">
+            <a href="/doctors/profile">Home</a>
+            <a href="/patients/register">Register Patient</a>
+            <a href="/reports/filter">Filter Reports</a>
+            <a href="/doctors/destroy">Logout</a>
+          </div>
+    <%}%>
+    <h1 id="heading"> Filter Reports Here</h1>
+    <form action="/reports/" method = "POST" class="form">
+        <select name="status" class="input-field" id="status">
+            <option value="Negative" class="opt">Negative</option>
+            <option value="Travelled-Quarantine" class="opt">Travelled-Quarantine</option>
+            <option value="Symptoms-Quarantine" class="opt">Symptoms-Quarantine</option>
+            <option value="Postive">Postive</option>
+        </select> <br>
+        <button type="submit" class="form-button form-button1" id="filter-btn">Filter</button>
+    </form>
+       <script>
+        
+        window.onload = () => {
+            let button = document.getElementById('filter-btn');
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                let status = document.getElementById('status');
+                console.log(status.value);
+                let form = document.getElementsByTagName('form')[0];
+                let requestUrl = form.getAttribute('action');
+                requestUrl += status.value;
+                form.setAttribute('action', requestUrl);
+                console.log(form)
+                form.submit();
+            });
+            console.log(button);
+        };
+    </script>
+</body>

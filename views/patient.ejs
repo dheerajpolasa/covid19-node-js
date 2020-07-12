@@ -1,0 +1,28 @@
+<body style="background-image: url(https://image.freepik.com/free-photo/doctor-holds-blood-test-black-background-china-coronavirus-epidemic-covid-19_159160-1253.jpg);">
+    <% if (locals.user) {%>
+        <div class="topnav">
+            <a href="/doctors/profile">Home</a>
+            <a href="/patients/register">Register Patient</a>
+            <a href="/reports/filter">Filter Reports</a>
+            <a href="/doctors/destroy">Logout</a>
+          </div>
+    <%}%>
+    <h1 id="heading">Name <%= patient.name%></h1>
+    <h2 id="heading">Phone <%= patient.phoneNumber %> </h2>
+
+    <form action="/patients/<%=patient.id%>/create_report" method="POST" class="form">
+        <label for="status" class="hd-bold" id="heading">Choose status:</label>
+        <select name="status" class="input-field" id="status">
+            <option value="Negative">Negative</option>
+            <option value="Travelled-Quarantine">Travelled-Quarantine</option>
+            <option value="Symptoms-Quarantine" >Symptoms-Quarantine</option>
+            <option value="Postive">Postive</option>
+        </select> <br>
+        <input type="text" class="input-field" name="name" id="name" value="<%=patient.name%>" hidden> <br>
+        <input type="text" class="input-field" name="doctor-name" id="doctor-name" value="<%=locals.user.username%>" hidden>
+        <button type="submit" class="report-btn btn-one"><span>Make Report</span></button>
+    </form>
+    <div id="sign-buttons-container">
+        <a href="/patients/<%=patient.id%>/all_reports" class="btn btn3" id="all-reports">All Reports</a>  
+    </div>  
+</body>

@@ -1,0 +1,74 @@
+<body style="background-image: url(https://images.unsplash.com/photo-1586369610044-b898d056a9d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80);">
+    <% if (locals.user) {%>
+        <div class="topnav">
+            <a href="/doctors/profile">Home</a>
+            <a href="/patients/register">Register Patient</a>
+            <a href="/reports/filter">Filter Reports</a>
+            <a href="/doctors/destroy">Logout</a>
+          </div>
+    <%}%>
+    <section class="patient-profile-container" id="profile-view">
+        <%if(locals.patient && patient !== undefined) {%>
+            <div id="patient-profile">
+                <h1 id="patient-name"><%=patient.name%></h1>
+                <h3 id="patient-number"><%=patient.phoneNumber%></h3>
+            </div>
+        <%}%>
+        <table id="patient-records-table">
+            <thead id="table-header">
+                <th>S.No</th>
+                <th>Date</th>
+                <%if(locals.reports) {%>
+                    <th>Name</th>
+                <%}%>
+                <th>Status</th>
+                <th>Doctor</th>
+            </thead>
+            <tbody id="table-body">
+                <% let i = 1; %>
+                <% if (locals.patient && patient !== undefined) {%>
+                    <% for (let report of patient.reports) {%>
+                        <%
+                            let d = report.date,
+                            month = '' + (d.getMonth() + 1),
+                            day = '' + d.getDate(),
+                            year = d.getFullYear();
+                            if (month.length < 2) 
+                                month = '0' + month;
+                            if (day.length < 2) 
+                                day = '0' + day;
+                            let dateFormat = [year, month, day].join('-');
+                        %>
+                        <tr>
+                            <td><%= i%></td>
+                            <td><%= dateFormat%></td>
+                            <td><%= report.status%></td>
+                            <td><%= report.doctor%></td>
+                        </tr>
+                    <%i++;}%>
+                <%} else if(reports !== null && reports !== undefined) {%>
+                    <% for (let report of reports) {%>
+                        <%
+                            let d = report.date,
+                            month = '' + (d.getMonth() + 1),
+                            day = '' + d.getDate(),
+                            year = d.getFullYear();
+                            if (month.length < 2) 
+                                month = '0' + month;
+                            if (day.length < 2) 
+                                day = '0' + day;
+                            let dateFormat = [year, month, day].join('-');
+                        %>
+                        <tr>
+                            <td><%= i%></td>
+                            <td><%= dateFormat%></td>
+                            <td><%= report.name %></td>
+                            <td><%= report.status%></td>
+                            <td><%= report.doctor%></td>
+                        </tr>
+                    <%}%>
+                <%}%>
+            </tbody>          
+        </table>
+    </section>    
+</body>
