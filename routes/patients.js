@@ -13,6 +13,9 @@ router.get('/register', passport.checkAuthentication, patientsController.registe
 // Route for creating patient
 router.post('/create', passport.checkAuthentication, patientsController.createAndGet);
 
+// Route for displaying patient
+router.get('/:id', passport.checkAuthentication, patientsController.display);
+
 // Route for creating report
 router.post('/:id/create_report', passport.checkAuthentication, patientsController.createReport);
 
