@@ -11,6 +11,20 @@ module.exports.register = function(req, res) {
     }
 }
 
+// Display the patient information
+module.exports.display = async function(req, res) {
+    try {
+        let patient = await Patient.findById(req.params.id);
+        console.log(patient);
+        return res.render('patient', {
+            patient: patient
+        });
+    } catch(err) {
+        req.flash('error', err);
+        return res.redirect('back');
+    }
+}
+
 // Creates the Patient, if already created, returns the object
 module.exports.createAndGet = async function(req, res) {
     try {
@@ -20,11 +34,11 @@ module.exports.createAndGet = async function(req, res) {
             flag = false;
             patient = await Patient.create({name: req.body.name, phoneNumber: parseInt(req.body.phoneNumber)});
         }
-        if(flag) req.flash('success', 'Patient Record is created');
-        else req.flash('success', 'Patient is fetched from DB')
-        return res.render('patient', {
-            patient: patient
-        })
+        let success = null;
+        if(flag) success = 'Patient is fetched from DB'
+        else success = 'Patient is created'
+        req.flash('success', success);
+        return res.redirect('/patients/'+patient.id);
     } catch(err) {
         console.log('Error in creating/finding the patient', err);
         req.flash('error', err);
@@ -45,11 +59,10 @@ module.exports.createReport = async function(req, res) {
         patient.reports.push(report);
         patient.save();
         req.flash('success', 'Report is created');
-        return res.render('patient', {
-            patient: patient
-        })
+        return res.redirect('/patients/'+patient.id);
     } catch(err) {
         console.log('Error in creating the report', err);
+        req.flash('error', err);
         return res.redirect('back');
     }
 }
